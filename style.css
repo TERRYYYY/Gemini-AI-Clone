@@ -21,3 +21,30 @@ body{
     background: var(--primary-color);
 }
 
+.header, .typing-area{
+    color: var(--text-color);
+}
+
+.header {
+    margin-top: 7vh;
+    padding: 1rem;
+}
+
+.header :where(.title, .subtitle){
+    font-weight: 500;
+    line-height: 3.6rem;
+}
+
+.header .title{
+    font-size: 2.7rem;
+    width: fit-content;
+    background-clip: text;
+    background: linear-gradient(to right, #4285f4, #d96570);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header .subtitle{
+    font-size: 2.4rem;
+    color: var(--subheading-color);
+}
