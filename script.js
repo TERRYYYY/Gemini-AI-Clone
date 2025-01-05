@@ -15,7 +15,7 @@ const createMessageElement = (content, ...classes) => {
 //Show Loading Animation while waiting for the API response
 const showLoadingAnimation = () => {
     const html = `<div class="message-content">
-                <img src="./images/gemini.svg" alt="Gemini Image" class="avatar">
+                <img src="images/gemini.svg" alt="Gemini Image" class="avatar">
                 <p class="text"></p>
 
                 <div class="loading-indicator">
