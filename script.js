@@ -1,4 +1,5 @@
 const typingForm = document.querySelector(".typing-form");
+const chatList = document.querySelector(".chat-list");
 
 let userMessage = null;
 
@@ -23,6 +24,11 @@ const handleOutgoingChat = () => {
                 </div>`
     
     const outgoingMessageDiv = createMessageElement (html, "outgoing");
+
+    //Creating an element of outgoing messages and adding it to the chat list
+    outgoingMessageDiv.querySelector(".text").innerText = userMessage;
+    
+    chatList.appendChild(outgoingMessageDiv);
 }
 
 //Prevent default form submission and handle ougoing chat
