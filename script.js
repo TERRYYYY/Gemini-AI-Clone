@@ -11,15 +11,37 @@ const createMessageElement = (content, className) => {
     return div;
 }
 
+
+//Show Loading Animation while waiting for the API response
+const showLoadingAnimation = () => {
+    const html = `<div class="message-content">
+                <img src="./images/gemini.svg" alt="Gemini Image" class="avatar">
+                <p class="text"></p>
+
+                <div class="loading-indicator">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                </div>
+            </div>
+            <span class="icon material-symbols-rounded"> content_copy </span>`
+    
+    const incomingMessageDiv = createMessageElement (html, "incoming", "loading");
+
+    //Creating an element of outgoing messages and adding it to the chat list
+    chatList.appendChild(incomingMessageDiv);
+
+}
+
 const handleOutgoingChat = () => {
     userMessage = typingForm.querySelector(".typing-input").value.trim();
 
     if (!userMessage) return; //Exit if there is no message
 
-    console.log(userMessage);
+    // console.log(userMessage);
 
     const html = `<div class="message-content">
-                    <img src="./images/gemini.svg" alt="Gemini Image" class="avatar">
+                    <img src="images/user5.jpg" alt="Gemini Image" class="avatar">
                     <p class="text"></p>
                 </div>`
     
@@ -27,8 +49,12 @@ const handleOutgoingChat = () => {
 
     //Creating an element of outgoing messages and adding it to the chat list
     outgoingMessageDiv.querySelector(".text").innerText = userMessage;
-    
+
     chatList.appendChild(outgoingMessageDiv);
+
+
+    typingForm.reset(); //Clear input field
+    setTimeout(showLoadingAnimation, 500); //Show loading animation after a delay
 }
 
 //Prevent default form submission and handle ougoing chat
