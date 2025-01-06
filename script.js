@@ -4,7 +4,7 @@ const chatList = document.querySelector(".chat-list");
 let userMessage = null;
 
 //API Configuration
-const API_KEY = "AIzaSyBlsFQ1T9wRhujejqhQhkgqBbUoOqBLRWU";
+const GEMINI_API_KEY = "AIzaSyBlsFQ1T9wRhujejqhQhkgqBbUoOqBLRWU";
 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -18,8 +18,36 @@ const createMessageElement = (content, ...classes) => {
 
 
 //Generate API Response
-const generateAPIResponse = () => {
 
+// Fetch response from the API based on the user's message
+const generateAPIResponse = async (incomingMessageDiv) => {
+    const textElement = incomingMessageDiv.querySelector(".text"); // Get text element
+    //Send a POST request to the API with the user's message
+    try{
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{
+                    role: "user",
+                    parts: [{ text: userMessage }]
+                }]
+            })
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        const apiResponse = data?.candidates[0].content.parts[0].text;
+        console.log(apiResponse);
+
+        textElement.innerText = apiResponse;
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        incomingMessageDiv.classList.remove("loading");
+    }
 }
 
 
@@ -41,6 +69,8 @@ const showLoadingAnimation = () => {
 
     //Creating an element of outgoing messages and adding it to the chat list
     chatList.appendChild(incomingMessageDiv);
+
+    generateAPIResponse(incomingMessageDiv);
 
 }
 
