@@ -9,6 +9,7 @@ const GEMINI_API_KEY = "AIzaSyBlsFQ1T9wRhujejqhQhkgqBbUoOqBLRWU";
 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
+
 //Local Storage Data
 const loadLocalStorageData = () => {
     const savedChats = localStorage.getItem("savedChats");
@@ -20,9 +21,14 @@ const loadLocalStorageData = () => {
 
     //Restore saved chats
     chatList.innerHTML = savedChats || "";
+
+    //Scroll to the bottom
+    chatList.scrollTo(0, chatList.scrollHeight);
 }
 
 loadLocalStorageData();
+
+
 
 //Create a new message element and return it
 const createMessageElement = (content, ...classes) => {
@@ -31,6 +37,8 @@ const createMessageElement = (content, ...classes) => {
     div.innerHTML = content;
     return div;
 }
+
+
 
 // Show typing effect by displaying words one by one
 const showTypingEffect = (text, textElement, incomingMessageDiv) => {
@@ -46,10 +54,18 @@ const showTypingEffect = (text, textElement, incomingMessageDiv) => {
         if(currentWordIndex === words.length){
             clearInterval(typingInterval);
             incomingMessageDiv.querySelector(".icon").classList.remove("hide");
-            localStorage.setItem("savedChats", chatList.innerHTML); //Save chats to local storage
+
+            //Save chats to local storage
+            localStorage.setItem("savedChats", chatList.innerHTML);
+            
         }
+        
+        //Scroll to the bottom
+        chatList.scrollTo(0, chatList.scrollHeight);
     }, 75);
 }
+
+
 
 //Generate API Response
 
@@ -107,9 +123,13 @@ const showLoadingAnimation = () => {
     //Creating an element of outgoing messages and adding it to the chat list
     chatList.appendChild(incomingMessageDiv);
 
+    //Scroll to the bottom
+    chatList.scrollTo(0, chatList.scrollHeight);
+
     generateAPIResponse(incomingMessageDiv);
 
 }
+
 
 //Copy message text to the clipboard
 const copyMessage = (copyIcon) => {
@@ -142,6 +162,10 @@ const handleOutgoingChat = () => {
 
 
     typingForm.reset(); //Clear input field
+
+    //Scroll to the bottom
+    chatList.scrollTo(0, chatList.scrollHeight);
+
     setTimeout(showLoadingAnimation, 500); //Show loading animation after a delay
 
 
