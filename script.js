@@ -16,6 +16,21 @@ const createMessageElement = (content, ...classes) => {
     return div;
 }
 
+// Show typing effect by displaying words one by one
+const showTypingEffect = (text, textElement) => {
+    const words = text.split(' ');
+    let currentWordIndex = 0;
+
+    const typingInterval = setInterval(() => {
+        //Append each word to the text element with a space
+        textElement.innerText += (currentWordIndex === 0 ? '' : ' ') + words[currentWordIndex++];
+
+        //If all words are displayed
+        if(currentWordIndex === words.length){
+            clearInterval(typingInterval);
+        }
+    }, 75);
+}
 
 //Generate API Response
 
@@ -38,10 +53,13 @@ const generateAPIResponse = async (incomingMessageDiv) => {
         const data = await response.json();
         console.log(data);
 
+        // Get the API response text
         const apiResponse = data?.candidates[0].content.parts[0].text;
         console.log(apiResponse);
 
-        textElement.innerText = apiResponse;
+        showTypingEffect(apiResponse, textElement);
+
+        // textElement.innerText = apiResponse;
 
     } catch (error) {
         console.log(error);
