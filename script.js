@@ -81,7 +81,7 @@ const showLoadingAnimation = () => {
                     <div class="loading-bar"></div>
                 </div>
             </div>
-            <span class="icon material-symbols-rounded"> content_copy </span>`
+            <span onClick="copyMessage(this)" class="icon material-symbols-rounded"> content_copy </span>`
     
     const incomingMessageDiv = createMessageElement (html, "incoming", "loading");
 
@@ -92,6 +92,17 @@ const showLoadingAnimation = () => {
 
 }
 
+//Copy message text to the clipboard
+const copyMessage = (copyIcon) => {
+    const messageText = copyIcon.parentElement.querySelector(".text").innerText;
+
+    navigator.clipboard.writeText(messageText);
+    copyIcon.innerText = "done"; //Show tick icon
+    setTimeout(() => copyIcon.innerText = "content_copy", 1000); // Revert icon after 1 second
+}
+
+
+//Handles outgoing chat
 const handleOutgoingChat = () => {
     userMessage = typingForm.querySelector(".typing-input").value.trim();
 
