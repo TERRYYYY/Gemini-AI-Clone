@@ -1,5 +1,6 @@
 const typingForm = document.querySelector(".typing-form");
 const chatList = document.querySelector(".chat-list");
+const toggleThemeButton = document.querySelector("#toggle-theme-button");
 
 let userMessage = null;
 
@@ -119,12 +120,17 @@ const handleOutgoingChat = () => {
 
     //Creating an element of outgoing messages and adding it to the chat list
     outgoingMessageDiv.querySelector(".text").innerText = userMessage;
-
     chatList.appendChild(outgoingMessageDiv);
 
 
     typingForm.reset(); //Clear input field
     setTimeout(showLoadingAnimation, 500); //Show loading animation after a delay
+
+
+    //Toggle between light mode and dark mode
+    toggleThemeButton.addEventListener("click", () => {
+        document.body.classList.toggle("light_mode");
+    });
 }
 
 //Prevent default form submission and handle ougoing chat
