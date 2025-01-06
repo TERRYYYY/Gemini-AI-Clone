@@ -3,12 +3,23 @@ const chatList = document.querySelector(".chat-list");
 
 let userMessage = null;
 
+//API Configuration
+const API_KEY = "AIzaSyBlsFQ1T9wRhujejqhQhkgqBbUoOqBLRWU";
+
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
 //Create a new message element and return it
 const createMessageElement = (content, ...classes) => {
     const div = document.createElement ("div");
     div.classList.add("message", ...classes);
     div.innerHTML = content;
     return div;
+}
+
+
+//Generate API Response
+const generateAPIResponse = () => {
+
 }
 
 
