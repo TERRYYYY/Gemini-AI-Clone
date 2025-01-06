@@ -33,17 +33,19 @@ const createMessageElement = (content, ...classes) => {
 }
 
 // Show typing effect by displaying words one by one
-const showTypingEffect = (text, textElement) => {
+const showTypingEffect = (text, textElement, incomingMessageDiv) => {
     const words = text.split(' ');
     let currentWordIndex = 0;
 
     const typingInterval = setInterval(() => {
         //Append each word to the text element with a space
         textElement.innerText += (currentWordIndex === 0 ? '' : ' ') + words[currentWordIndex++];
+        incomingMessageDiv.querySelector(".icon").classList.add("hide");
 
         //If all words are displayed
         if(currentWordIndex === words.length){
             clearInterval(typingInterval);
+            incomingMessageDiv.querySelector(".icon").classList.remove("hide");
             localStorage.setItem("savedChats", chatList.innerHTML); //Save chats to local storage
         }
     }, 75);
@@ -70,11 +72,11 @@ const generateAPIResponse = async (incomingMessageDiv) => {
         const data = await response.json();
         console.log(data);
 
-        // Get the API response text
-        const apiResponse = data?.candidates[0].content.parts[0].text;
+        // Get the API response text and remove asterisks from it
+        const apiResponse = data?.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, '$1');
         console.log(apiResponse);
 
-        showTypingEffect(apiResponse, textElement);
+        showTypingEffect(apiResponse, textElement, incomingMessageDiv);
 
         // textElement.innerText = apiResponse;
 
