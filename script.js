@@ -21,7 +21,10 @@ const loadLocalStorageData = () => {
     toggleThemeButton.innerText = isLightMode ? "dark_mode" : "light_mode";
 
     //Restore saved chats
-    chatList.innerHTML = savedChats || "";
+    // chatList.innerHTML = savedChats || "";
+
+    // Hide header once chatting has started
+    document.body.classList.toggle("hide-header", savedChats);
 
     //Scroll to the bottom
     chatList.scrollTo(0, chatList.scrollHeight);
@@ -57,7 +60,7 @@ const showTypingEffect = (text, textElement, incomingMessageDiv) => {
             incomingMessageDiv.querySelector(".icon").classList.remove("hide");
 
             //Save chats to local storage
-            localStorage.setItem("savedChats", chatList.innerHTML);
+            // localStorage.setItem("savedChats", chatList.innerHTML);
             
         }
 
@@ -117,7 +120,8 @@ const showLoadingAnimation = () => {
                     <div class="loading-bar"></div>
                 </div>
             </div>
-            <span onClick="copyMessage(this)" class="icon material-symbols-rounded"> content_copy </span>`
+            <span onClick="copyMessage(this)" class="icon material-symbols-rounded"> content_copy </span>
+            <span id="delete-chat-button" class="icon material-symbols-rounded">delete</span>`
     
     const incomingMessageDiv = createMessageElement (html, "incoming", "loading");
 
@@ -161,11 +165,14 @@ const handleOutgoingChat = () => {
     outgoingMessageDiv.querySelector(".text").innerText = userMessage;
     chatList.appendChild(outgoingMessageDiv);
 
-
-    typingForm.reset(); //Clear input field
+    //Clear input field
+    typingForm.reset(); 
 
     //Scroll to the bottom
     chatList.scrollTo(0, chatList.scrollHeight);
+
+    // Hide header once chatting has started
+    document.body.classList.add("hide-header");
 
     setTimeout(showLoadingAnimation, 500); //Show loading animation after a delay
 
