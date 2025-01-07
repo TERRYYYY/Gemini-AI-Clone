@@ -121,7 +121,7 @@ const showLoadingAnimation = () => {
                 </div>
             </div>
             <span onClick="copyMessage(this)" class="icon material-symbols-rounded"> content_copy </span>
-            <span id="delete-chat-button" class="icon material-symbols-rounded">delete</span>`
+            `
     
     const incomingMessageDiv = createMessageElement (html, "incoming", "loading");
 
