@@ -1,6 +1,7 @@
 const typingForm = document.querySelector(".typing-form");
 const chatList = document.querySelector(".chat-list");
 const toggleThemeButton = document.querySelector("#toggle-theme-button");
+const deleteChatButton = document.querySelector("#delete-chat-button");
 
 let userMessage = null;
 
@@ -59,7 +60,7 @@ const showTypingEffect = (text, textElement, incomingMessageDiv) => {
             localStorage.setItem("savedChats", chatList.innerHTML);
             
         }
-        
+
         //Scroll to the bottom
         chatList.scrollTo(0, chatList.scrollHeight);
     }, 75);
@@ -175,7 +176,16 @@ const handleOutgoingChat = () => {
 
         localStorage.setItem("themeColor", isLightMode ? "light_mode" : "dark_mode");
         toggleThemeButton.innerText = isLightMode ? "dark_mode" : "light_mode";
-    })
+    });
+
+
+    // Delete all chats from local storage when button is clicked
+    deleteChatButton.addEventListener("click", () => {
+        if(confirm("Are you sure you want to delete all messages?")) {
+            localStorage.removeItem("savedChats");
+            loadLocalStorageData();
+        }
+    });
 }
 
 //Prevent default form submission and handle ougoing chat
